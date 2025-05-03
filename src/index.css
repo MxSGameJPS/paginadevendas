@@ -1,0 +1,158 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css");
+
+:root {
+  --cor-primaria: #0f0f0f;
+  --cor-secundaria: #d4af37;
+  --cor-accent: #ffd700;
+  --cor-texto-primaria: #ffffff;
+  --cor-texto-secundaria: #d8d8d8;
+  --cor-bg-escuro: #121212;
+  --cor-bg-claro: #1e1e1e;
+  --font-primary: "Montserrat", sans-serif;
+
+  --transition-slow: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  --transition-medium: 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  --transition-fast: 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.15);
+  --shadow-md: 0 5px 20px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-primary);
+  color: var(--cor-texto-primaria);
+  background-color: var(--cor-primaria);
+  line-height: 1.6;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0 0 1rem 0;
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+h1 {
+  font-size: 3.6rem;
+}
+
+h2 {
+  font-size: 2.8rem;
+}
+
+h3 {
+  font-size: 2rem;
+}
+
+p {
+  margin: 0 0 1.5rem 0;
+}
+
+a {
+  color: var(--cor-secundaria);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--cor-accent);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+button,
+.button {
+  cursor: pointer;
+  font-family: var(--font-primary);
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 12px 24px;
+  border-radius: 50px;
+  background: var(--cor-secundaria);
+  color: var(--cor-bg-escuro);
+  border: none;
+  transition: all var(--transition-medium);
+  outline: none;
+}
+
+button:hover,
+.button:hover {
+  background: var(--cor-accent);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+button:active,
+.button:active {
+  transform: translateY(0);
+}
+
+section {
+  padding: 80px 0;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+::selection {
+  background-color: var(--cor-secundaria);
+  color: var(--cor-bg-escuro);
+}
+
+main {
+  min-height: 100vh;
+}
+
+/* Scrollbar personalizada */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--cor-bg-escuro);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--cor-secundaria);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--cor-accent);
+}
+
+/* Efeito de texto gradiente */
+.gradient-text {
+  background: linear-gradient(to right, var(--cor-secundaria), #ffd700);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
