@@ -188,6 +188,23 @@
 }
 
 /* Responsividade */
+@media (max-width: 1200px) {
+  .benefitsContainer {
+    justify-content: center;
+  }
+
+  .benefitItem {
+    flex: 0 1 calc(33.33% - 30px);
+    min-width: 180px;
+  }
+}
+
+@media (max-width: 992px) {
+  .benefitItem {
+    flex: 0 1 calc(50% - 30px);
+  }
+}
+
 @media (max-width: 768px) {
   .title {
     font-size: 3rem;
@@ -203,16 +220,54 @@
   }
 
   .benefitsStrip {
-    padding: 15px 20px;
+    padding: 20px 0 10px;
   }
 
-  .benefitsContainer {
-    flex-direction: column;
-    gap: 15px;
+  .benefitSlider {
+    height: 100px;
   }
 
   .benefitItem {
-    width: 100%;
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .benefitItem i {
+    font-size: 1.2rem;
+    width: 40px;
+    height: 40px;
+  }
+
+  .benefitItem span {
+    font-size: 0.9rem;
+  }
+
+  .benefitNavButton {
+    font-size: 1.2rem;
+  }
+
+  .expertBadge {
+    top: 5%;
+    right: 5%;
+  }
+
+  .badgeInner {
+    width: 100px;
+    height: 100px;
+  }
+
+  .badgeIcon {
+    font-size: 1rem;
+    margin-bottom: 1px;
+  }
+
+  .badgeLabel {
+    font-size: 0.6rem;
+  }
+
+  .badgeText {
+    font-size: 0.4rem;
   }
 }
 
@@ -223,7 +278,7 @@
   left: 0;
   width: 100%;
   background: rgba(0, 0, 0, 0.8);
-  padding: 25px 0;
+  padding: 25px 0 15px;
   z-index: 20;
   border-top: 2px solid var(--cor-secundaria);
   box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.3);
@@ -248,20 +303,49 @@
 
 .benefitsContainer {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
-  max-width: 1200px;
+  max-width: 900px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 15px;
+  position: relative;
+}
+
+.benefitSlider {
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+  height: 80px;
+  overflow: hidden;
+  margin: 0 15px;
 }
 
 .benefitItem {
+  position: absolute;
   display: flex;
   align-items: center;
-  gap: 15px;
-  color: var(--cor-texto-primaria);
-  font-size: 1.1rem;
-  padding: 10px 20px;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  gap: 20px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  padding: 0 20px;
+}
+
+.activeBenefit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.benefitIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  flex-shrink: 0;
 }
 
 .benefitItem i {
@@ -270,20 +354,150 @@
   background: rgba(212, 175, 55, 0.1);
   border-radius: 50%;
   padding: 10px;
-  width: 45px;
-  height: 45px;
+  width: 50px;
+  height: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
   box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
   transition: all 0.3s ease;
-}
-
-.benefitItem:hover i {
-  transform: scale(1.1) rotate(5deg);
-  background: rgba(212, 175, 55, 0.2);
+  flex-shrink: 0;
 }
 
 .benefitItem span {
+  font-size: 1.1rem;
+  color: var(--cor-texto-primaria);
   font-weight: 600;
+  text-align: center;
+  flex: 1;
+}
+
+.benefitNavButton {
+  background: transparent;
+  border: none;
+  color: var(--cor-secundaria);
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  opacity: 0.7;
+}
+
+.benefitNavButton:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.benefitIndicators {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.benefitIndicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.activeBenefitIndicator {
+  background: var(--cor-secundaria);
+  transform: scale(1.2);
+}
+
+/* Badge/Selo de especialista */
+.expertBadge {
+  position: absolute;
+  top: 10%;
+  right: 8%;
+  z-index: 30;
+  transform: rotate(0) scale(0);
+  opacity: 0;
+  filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.3));
+}
+
+.animateBadge {
+  animation: badgeAppear 0.8s forwards cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes badgeAppear {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.badgeInner {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: var(--cor-secundaria);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  animation: float-badge 4s ease-in-out infinite;
+}
+
+.badgeInner::before,
+.badgeInner::after {
+  display: none;
+}
+
+@keyframes float-badge {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.badgeIcon {
+  font-size: 1.6rem;
+  color: #000;
+  margin-bottom: 2px;
+}
+
+.badgeContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.badgeLabel {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #000;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  margin-bottom: 1px;
+}
+
+.badgeText {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #000;
+  max-width: 90%;
 }

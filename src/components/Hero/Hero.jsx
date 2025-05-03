@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./Hero.module.css";
 
 function Hero() {
@@ -8,6 +8,32 @@ function Hero() {
   const buttonRef = useRef(null);
   const particlesRef = useRef(null);
   const benefitsRef = useRef(null);
+  const badgeRef = useRef(null);
+  const [currentBenefit, setCurrentBenefit] = useState(0);
+
+  // Array com todos os benefícios
+  const benefits = [
+    {
+      icon: "fas fa-server",
+      text: "Hospedagem e Domínio gratuito por 12 meses",
+    },
+    {
+      icon: "fas fa-headset",
+      text: "3 meses de suporte grátis",
+    },
+    {
+      icon: "fas fa-percentage",
+      text: "Desconto exclusivo para novos clientes",
+    },
+    {
+      icon: "fas fa-bolt",
+      text: "Seu site entregue em 72 horas",
+    },
+    {
+      icon: "fas fa-laptop-code",
+      text: "Do design ao site 100% responsivo",
+    },
+  ];
 
   useEffect(() => {
     // Animação de entrada dos elementos
@@ -33,6 +59,11 @@ function Hero() {
       setTimeout(() => {
         benefitsRef.current.classList.add(styles.animateBenefits);
       }, 1600);
+    }
+    if (badgeRef.current) {
+      setTimeout(() => {
+        badgeRef.current.classList.add(styles.animateBadge);
+      }, 500);
     }
 
     // Criar e animar partículas
@@ -61,11 +92,17 @@ function Hero() {
 
     createParticles();
 
+    // Rotação automática dos benefícios
+    const benefitInterval = setInterval(() => {
+      setCurrentBenefit((prev) => (prev + 1) % benefits.length);
+    }, 4000);
+
     return () => {
       // Limpar partículas ao desmontar o componente
       if (particlesRef.current) {
         particlesRef.current.innerHTML = "";
       }
+      clearInterval(benefitInterval);
     };
   }, []);
 
@@ -77,9 +114,30 @@ function Hero() {
     }
   };
 
+  const handlePrevBenefit = () => {
+    setCurrentBenefit((prev) => (prev - 1 + benefits.length) % benefits.length);
+  };
+
+  const handleNextBenefit = () => {
+    setCurrentBenefit((prev) => (prev + 1) % benefits.length);
+  };
+
   return (
     <section className={styles.hero}>
       <div ref={particlesRef} className={styles.particles}></div>
+
+      <div ref={badgeRef} className={styles.expertBadge}>
+        <div className={styles.badgeInner}>
+          <div className={styles.badgeIcon}>
+            <i className="fas fa-award"></i>
+          </div>
+          <div className={styles.badgeContent}>
+            <span className={styles.badgeLabel}>Seu site entregue em 72 horas</span>
+            {/* <span className={styles.badgeText}>+50 Projetos Entregues</span> */}
+          </div>
+        </div>
+      </div>
+
       <div className={styles.content}>
         <h1 ref={titleRef} className={styles.title}>
           Saulo Pavanello
@@ -104,18 +162,50 @@ function Hero() {
 
       <div ref={benefitsRef} className={styles.benefitsStrip}>
         <div className={styles.benefitsContainer}>
-          <div className={styles.benefitItem}>
-            <i className="fas fa-server"></i>
-            <span>Hospedagem e Domínio gratuito por 12 meses</span>
+          <button
+            className={styles.benefitNavButton}
+            onClick={handlePrevBenefit}
+            aria-label="Benefício anterior"
+          >
+            <i className="fas fa-chevron-left"></i>
+          </button>
+
+          <div className={styles.benefitSlider}>
+            {benefits.map((benefit, index) => (
+              <div
+                key={index}
+                className={`${styles.benefitItem} ${
+                  index === currentBenefit ? styles.activeBenefit : ""
+                }`}
+              >
+                <div className={styles.benefitIcon}>
+                  <i className={benefit.icon}></i>
+                </div>
+                <span>{benefit.text}</span>
+              </div>
+            ))}
           </div>
-          <div className={styles.benefitItem}>
-            <i className="fas fa-headset"></i>
-            <span>3 meses de suporte grátis</span>
-          </div>
-          <div className={styles.benefitItem}>
-            <i className="fas fa-percentage"></i>
-            <span>Desconto exclusivo para novos clientes</span>
-          </div>
+
+          <button
+            className={styles.benefitNavButton}
+            onClick={handleNextBenefit}
+            aria-label="Próximo benefício"
+          >
+            <i className="fas fa-chevron-right"></i>
+          </button>
+        </div>
+
+        <div className={styles.benefitIndicators}>
+          {benefits.map((_, index) => (
+            <button
+              key={index}
+              className={`${styles.benefitIndicator} ${
+                index === currentBenefit ? styles.activeBenefitIndicator : ""
+              }`}
+              onClick={() => setCurrentBenefit(index)}
+              aria-label={`Ir para benefício ${index + 1}`}
+            />
+          ))}
         </div>
       </div>
     </section>
